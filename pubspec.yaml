@@ -1,0 +1,26 @@
+name: ollama_chat_desktop
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared_preferences: 
+  flutter_markdown: ^0.7.3
+  path_provider: 
+  path:
+  provider: 
+  http:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
