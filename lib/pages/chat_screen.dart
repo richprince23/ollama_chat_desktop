@@ -26,60 +26,33 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> sendMessage(String message) async {
     http.Client client = http.Client();
+
+    var msg;
+
     try {
       setState(() {
         _isLoading = true;
         _errorMessage = '';
         history.add(Message(text: message, fromUser: true));
       });
-      // final response = await chat.sendMessage(content);
-      // var headers = {
-      //   'Cache-Control': 'no-cache',
-      //   'Accept': '*/*',
-      //   'Accept-Encoding': 'gzip, deflate',
-      //   'Connection': 'keep-alive'
-      // };
-      // final url = Uri.parse('http://127.0.0.1:11434/api/generate');
-      // final request = http.Request('POST', url)
-      //   ..headers['Content-Type'] = 'application/json'
-      //   ..body = jsonEncode({
-      //     'model': 'deepseek-coder:latest',
-      //     'prompt': 'Why is the sky blue?',
-      //     'stream': false,
-      //   });
+      var headers = {'Content-Type': 'application/json'};
+      var request =
+          http.Request('POST', Uri.parse('http://localhost:11434/api/chat'));
+      request.body = json.encode({
+        "model": "deepseek-coder",
+        "messages": [
+          {"role": "user", "content": "$message"}
+        ],
+        "stream": false
+      });
+      request.headers.addAll(headers);
 
-      // final streamedResponse = await http.Client().send(request);
-      // print(streamedResponse.statusCode);
-      // final tokens = await streamedResponse.stream
-      //     .transform(utf8.decoder)
-      //     .transform(const LineSplitter())
-      //     .join('\n');
-
-      // var headers = {
-      //   'Cache-Control': 'no-cache',
-      //   'Accept': '*/*',
-      //   'Accept-Encoding': 'gzip, deflate',
-      //   'Connection': 'keep-alive'
-      // };
-      // var request =
-      //     http.Request('GET', Uri.parse('http://127.0.0.1:11434/api/tags'));
-      // request.body =
-      //     '''{\n    "model": "deepseek-coder:latest",\n    "prompt": "Why is the sky blue?",\n    "stream": false\n}''';
-      // request.headers.addAll(headers);
-
-      var headers = {
-        'Content-type': 'application/json',
-      };
-      var response = await client
-          // .get(Uri.parse("http://127.0.0.1:11434/api/tags"), headers: headers);
-          .get(Uri.parse("https://api.infoctess-uew.org/members"),
-              headers: headers);
-
-      //  if (response.statusCode == 200){
-      //   http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-        print(await response.body);
+        msg = await response.stream.bytesToString();
+        msg = jsonDecode(msg);
+        print(msg);
       } else {
         print(response.reasonPhrase);
       }
@@ -87,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
       // print(response.stream.toBytes().toString());
       setState(() {
         _isLoading = false;
-        history.add(Message(text: response.body, fromUser: false));
+        history.add(Message(text: msg['message']['content'], fromUser: false));
       });
       // print(tokens);
     } catch (e) {
