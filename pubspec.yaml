@@ -1,20 +1,20 @@
 name: ollama_chat_desktop
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: ">=3.3.1 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  shared_preferences: 
+  # shared_preferences:
   flutter_markdown: ^0.7.3
-  path_provider: 
+  # path_provider:
   path:
-  provider: 
+  provider:
   http:
 
 dev_dependencies:

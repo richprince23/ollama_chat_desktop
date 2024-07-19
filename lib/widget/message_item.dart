@@ -9,6 +9,7 @@ class MessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: (isFromUser != null && isFromUser!)
           ? MainAxisAlignment.end
@@ -16,7 +17,7 @@ class MessageItem extends StatelessWidget {
       children: [
         Flexible(
           child: Container(
-            constraints: const BoxConstraints(maxWidth: 520),
+            constraints: BoxConstraints(maxWidth: size.width * 0.8),
             decoration: BoxDecoration(
               color: isFromUser != null && isFromUser!
                   ? Theme.of(context).colorScheme.primaryContainer
@@ -37,7 +38,11 @@ class MessageItem extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 8),
             child: Column(
               children: [
-                if (text case final text?) MarkdownBody(data: text),
+                if (text case final text?)
+                  MarkdownBody(
+                    data: text,
+                    selectable: true,
+                  ),
                 if (image case final image?) image,
               ],
             ),

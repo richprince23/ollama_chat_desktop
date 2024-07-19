@@ -17,7 +17,7 @@ class IntroScreen extends StatelessWidget {
             ),
           ),
           width: MediaQuery.of(context).size.width * 0.6,
-          height: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -42,7 +42,7 @@ class IntroScreen extends StatelessWidget {
                 height: 100,
               ),
               SizedBox(
-                width: 400,
+                width: MediaQuery.of(context).size.width * 0.3,
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
